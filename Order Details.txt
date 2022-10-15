@@ -1,0 +1,252 @@
+   public void BindGridview()
+    {
+        if (Session["myDatatable"] != null)
+        {
+            DataTable dt = (DataTable)Session["myDatatable"]; 
+
+           if ((dt != null) && (dt.Rows.Count > 0))
+            {
+                GridView2.Visible = true;
+                GridView2.DataSource = dt;
+                GridView2.DataBind();
+            }
+            else
+            {
+                GridView2.Visible = false;
+            }
+        }
+    }
+        void DropDownList()
+        {
+            ListItem SelectItem = new ListItem("Select Customer", "-1");
+            SelectItem.Selected = true;
+            DropDownList1.Items.Insert(0, SelectItem);
+        }if (this.GridView2.Rows.Count > 0 && Session["myDatatable"] != null)
+        {
+            DataTable dt = (DataTable)Session["myDatatable"];
+            dt.Clear();
+            foreach (GridViewRow row in this.GridView2.Rows)
+            {
+                string ProductName = (row.FindControl("ProductName") as DropDownList).SelectedItem.Text;
+                string ProductID = (row.FindControl("ProductId") as TextBox).Text;
+                string Rate = (row.FindControl("Rate") as TextBox).Text;
+                string Quantity = (row.FindControl("quantity") as TextBox).Text;
+                string TotalAmount = (row.FindControl("TotalAmount") as TextBox).Text;
+                dt.Rows.Add(ProductName,ProductID,Rate,Quantity,TotalAmount);
+                (row.FindControl("ProductName") as DropDownList).Items.FindByText(ProductName).Selected = true;
+            }
+            Session["myDatatable"] = dt;
+        } 
+
+   } 
+
+
+    public void AddNewData()
+    {
+        DataTable dt = new DataTable();
+        if (Session["myDatatable"] != null)
+        {
+            dt = (DataTable)Session["myDatatable"];
+        }
+        else
+        {
+            dt.Columns.Add("ProductName");
+            dt.Columns.Add("ProductId");
+            dt.Columns.Add("Rate");
+            dt.Columns.Add("quantity");
+            dt.Columns.Add("TotalAmount");
+        } 
+
+       DataRow drow = dt.NewRow();
+        drow["ProductName"] = "";
+        drow["ProductId"] = "";
+        drow["Rate"] = "";
+        drow["quantity"] = "";
+        drow["TotalAmount"] = "";
+        dt.Rows.Add(drow);
+        Session["myDatatable"] = dt;
+    } 
+
+   public void BindGridview()
+    {
+        if (Session["myDatatable"] != null)
+        {
+            DataTable dt = (DataTable)Session["myDatatable"]; 
+
+           if ((dt != null) && (dt.Rows.Count > 0))
+            {
+                GridView2.Visible = true;
+                GridView2.DataSource = dt;
+                GridView2.DataBind();
+            }
+            else
+            {
+                GridView2.Visible = false;
+            }
+        }
+    }
+        void DropDownList()
+        {
+            ListItem SelectItem = new ListItem("Select Customer", "-1");
+            SelectItem.Selected = true;
+            DropDownList1.Items.Insert(0, SelectItem);
+        }
+
+protected void Button1_Click(object sender, EventArgs e)
+             { 
+
+            } 
+
+            void LoadRecord()
+             {
+                 SqlCommand comm = new SqlCommand("select * from dbo.Customeer ", conn);
+                 SqlDataAdapter da = new SqlDataAdapter(comm);
+                 DataTable dt = new DataTable();
+                 da.Fill(dt);
+                 GridView1.DataSource = dt;
+                 GridView1.DataBind();
+             } 
+
+            protected void Button3_Click(object sender, EventArgs e)
+             {
+                 // Creating instance of SqlCommand
+                 SqlCommand comm = new SqlCommand("select * from dbo.Customeer Where CustomerID = '" + int.Parse(DropDownList1.Text) + "'", conn);
+                 SqlDataAdapter d = new SqlDataAdapter(comm);
+                 DataTable dt = new DataTable();
+                 d.Fill(dt);
+                 GridView1.DataSource = dt;
+                 GridView1.DataBind();
+             } 
+
+            protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
+             { 
+
+            } 
+
+            protected void Button4_Click(object sender, EventArgs e)
+             {
+                 SqlCommand comm = new SqlCommand("select * from dbo.Product Where ProductID = '" + (DropDownList2.Text) + "'", conn);
+                 SqlDataAdapter d = new SqlDataAdapter(comm);
+                 DataTable dt = new DataTable();
+                 d.Fill(dt);
+                 GridView1.DataSource = dt;
+                 GridView1.DataBind(); 
+
+            } 
+
+            protected void DropDownList1_SelectedIndexChanged1(object sender, EventArgs e)
+             {
+                 // SqlCommand comm = new SqlCommand("select * from Customeer where CustomerName='" + this.CustomerName.SelectedValue + "'", conn);
+                 //  SqlDataAdapter dataAadpter = new SqlDataAdapter(comm);
+                 //  DataSet ds = new DataSet();
+                 // dataAadpter.Fill(ds);
+                 //ListView1.DataSource = ds;
+                 /*if (ds != null)
+                 {
+                     LBEmailId.DataSource = ds.Tables[0];
+                     LBEmailId.DataTextField = "ContactPerson_EmailID";
+                     //LBEmailId.DataValueField = "Id";
+                     LBEmailId.DataBind();
+                 } 
+
+
+if (this.GridView2.Rows.Count > 0 && Session["myDatatable"] != null)
+        {
+            DataTable dt = (DataTable)Session["myDatatable"];
+            dt.Clear();
+            foreach (GridViewRow row in this.GridView2.Rows)
+            {
+                string ProductName = (row.FindControl("ProductName") as DropDownList).SelectedItem.Text;
+                string ProductID = (row.FindControl("ProductId") as TextBox).Text;
+                string Rate = (row.FindControl("Rate") as TextBox).Text;
+                string Quantity = (row.FindControl("quantity") as TextBox).Text;
+                string TotalAmount = (row.FindControl("TotalAmount") as TextBox).Text;
+                dt.Rows.Add(ProductName,ProductID,Rate,Quantity,TotalAmount);
+                (row.FindControl("ProductName") as DropDownList).Items.FindByText(ProductName).Selected = true;
+            }
+            Session["myDatatable"] = dt;
+        } 
+
+   } 
+
+
+    public void AddNewData()
+    {
+        DataTable dt = new DataTable();
+        if (Session["myDatatable"] != null)
+        {
+            dt = (DataTable)Session["myDatatable"];
+        }
+        else
+        {
+            dt.Columns.Add("ProductName");
+            dt.Columns.Add("ProductId");
+            dt.Columns.Add("Rate");
+            dt.Columns.Add("quantity");
+            dt.Columns.Add("TotalAmount");
+        } 
+
+       DataRow drow = dt.NewRow();
+        drow["ProductName"] = "";
+        drow["ProductId"] = "";
+        drow["Rate"] = "";
+        drow["quantity"] = "";
+        drow["TotalAmount"] = "";
+        dt.Rows.Add(drow);
+        Session["myDatatable"] = dt;
+    } 
+
+protected void DropDownList3_SelectedIndexChanged(object sender, EventArgs e)
+         {
+             conn.Open();
+             sqlcmd.CommandText = "Select * from[Rate] Where ProductName=@ProductName and ProductId =@ProductId";
+             //sqlcmd.Parameters.AddWithValue("@ProductName", D.SelectedValue); 
+
+        } 
+
+       private void BindList()
+        {
+            conn.Open();
+            sqlcmd.CommandText = "select * from dbo.Product";
+            sqlcmd.Connection = conn;
+            SqlDataAdapter da = new SqlDataAdapter(sqlcmd);
+            da.Fill(ds);
+            conn.Close();
+            DropDownList4.DataSource = ds;
+            DropDownList4.DataTextField = "ProductName";
+            DropDownList4.DataBind(); 
+
+           DropDownList4.Items.Insert(0, "Select ProductName"); 
+
+       }
+         private void GridInfo()
+         { 
+
+            DataTable dt = new DataTable();
+             DataRow dr;
+             dt.Columns.Add(new System.Data.DataColumn("ProductName", typeof(String)));
+             dt.Columns.Add(new System.Data.DataColumn("ProductID", typeof(String)));
+             dt.Columns.Add(new System.Data.DataColumn("Rate", typeof(String)));
+             dt.Columns.Add(new System.Data.DataColumn("Quantity", typeof(String)));
+             dt.Columns.Add(new System.Data.DataColumn("TotalAmount", typeof(String))); 
+
+            foreach (GridViewRow row in GridView2.Rows)
+             {
+                 TextBox ProductName = (TextBox)row.FindControl("txtProductName");
+                 TextBox ProductID = (TextBox)row.FindControl("txtProductID");
+                 TextBox Rate = (TextBox)row.FindControl("txtRate");
+                 TextBox Quantity = (TextBox)row.FindControl("txtQuantity");
+                 TextBox TotalAmount = (TextBox)row.FindControl("txtTotalAmount");
+                 dr = dt.NewRow();
+                 dr[0] = ProductName.Text;
+                 dr[1] = ProductID.Text;
+                 dr[2] = Rate.Text;
+                 dr[3] = Quantity.Text;
+                 dr[4] = TotalAmount.Text;
+                 dt.Rows.Add(dr);
+             } 
+
+            Session["QtyTable"] = dt;
+             //Response.Redirect("Admin/Default.aspx");
+         }
+
